@@ -3,6 +3,7 @@
 * Allows having different IP settings depending on the wifi SSID
 
 Simplified location changer based on http://tech.inhelsinki.nl/locationchanger/
+
 Forked from https://github.com/rimar/wifi-location-changer
 
 ## Installation
