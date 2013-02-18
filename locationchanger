@@ -1,22 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env ruby
+sleep 2               #wait 2 seconds
+$my_SSID = 'ninja' #set global variable to SSID of your home network
 
-# automatically change configuration of Mac OS X based on location
-
-# redirect all IO to /dev/null (comment this out if you want to debug)
-# exec 1>/dev/null 2>/dev/null
-
-# get a little breather before we get data for things to settle down
-sleep 2
-
-# get various system information
-SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I\
- | grep ' SSID:' | cut -d ':' -f 2 | tr -d ' '`
-
-HOME_SSID=ninja
-
-if [ "$SSID" = "$HOME_SSID" ]; then
-  scselect home
-else
-  scselect auto
-fi
-
+result = IO::popen('airport -I').read
+`scselect auto` unless result.include?($my_SSID) # default profile 'auto'
+`scselect Home` if result.include?($my_SSID) # select preferred network
